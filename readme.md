@@ -180,4 +180,29 @@ _Existem diversos paradigmas de programação, cada um com suas características
           // Expected output: 6
           ```
 
-    - Todo objeto herda de outro objeto via **prototype chain**, que é o mecanismo que permite aos objetos herdar propriedades e métodos de outros objetos, através de um encadeamento de referências.
+    - Todo objeto herda de outro objeto via **[prototype chain](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain)**, que é o mecanismo que permite aos objetos herdar propriedades e métodos de outros objetos, através de um encadeamento de referências. JavaScript é um pouco confuso para desenvolvedores com experiência em linguagens baseadas em classes (como Java ou C++), porque é dinâmico e não dispõe de uma implementação de uma class (a palavra-chave class foi introduzida no ES2015, mas é syntax sugar, o JavaScript permanece baseado em prototype).
+
+      - **Herança com o encadeamento de protótipos:**
+        Objetos em JavaScript são "sacos" dinâmicos de propriedades (a que se refere as próprias propriedades) e cada um tem um link para um objeto prototype. Eis o que acontece quando se tenta acessar uma propriedade:
+        ```javascript
+        let f = function () {
+          this.a = 1;
+          this.b = 2;
+        };
+        let o = new f(); // {a: 1, b: 2}
+        ```
+      - **Herança de "métodos"**
+        JavaScript não tem "métodos" como os que conhecemos em linguagens baseadas em classes. Em JavaScript, qualquer função pode ser adicionada em um objeto em forma de propriedade. Uma herança de funções age como a herança de quaisquer outras propriedades que não sejam funções, e podemos inclusive realizar sobre-escrita de função (method overriding)!
+
+        ```javascript
+        function Pessoa(nome) {
+          this.nome = nome;
+        }
+
+        Pessoa.prototype.apresentar = function () {
+          console.log(`Olá, sou ${this.nome}`);
+        };
+
+        const joao = new Pessoa("João");
+        joao.apresentar();
+        ```
