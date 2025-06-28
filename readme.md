@@ -271,3 +271,47 @@ _Existem diversos paradigmas de programação, cada um com suas características
     ![ProcessJs](https://miro.medium.com/v2/1*4lHHyfEhVB0LnQ3HlhSs8g.png)
 
     - **Para testar o processo de forma visual: [Loupe](https://latentflip.com/loupe)**
+
+- ### Conceitos avançados do JavaScript
+
+  - **Closure**
+    Uma [text](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Closures) é uma combinação de uma função com as referências ao estado que a circunda (o **ambiente léxico**).Em outras palavras, uma closure lhe dá acesso ao escopo da função externa a partir da função interna. Em JavaScript, as closures são criadas toda vez que uma função é criada, no momento da criação da função.
+
+    ```javascript
+    function makeAdder(x) {
+      return function (y) {
+        return x + y;
+      };
+    }
+
+    var add5 = makeAdder(5);
+
+    console.log(add5); // Function
+    console.log(typeof add5); // Function
+
+    var add10 = makeAdder(10)(10);
+    console.log(add10); // 20
+    ```
+
+  - **Hoisting**
+    O [Hoisting](https://developer.mozilla.org/pt-BR/docs/Glossary/Hoisting) ou içamento, em português, é um termo que você não encontrará em nenhuma especificação normativa antes de 2015. O hoisting foi pensado como uma maneira geral de pensar sobre os contextos de execução (especificamente as fases de criação e execução) funcionam em JavaScript. No entanto o conceito pode ser um pouco confuso.
+
+    ![Hoisting](https://miro.medium.com/v2/resize:fit:1400/0*wtjm4eeGFd9Wc_Qz)
+
+    Conceitualmente, por exemplo, uma definição estrita de elevação sugere que as declarações de variáveis e funções são fisicamente **movidas para o topo do código**, mas isso não é realmente o que acontece. Em vez disso, as declarações de variável e função são deslocadas **na memória** durante a **fase de compilação**, mas **permanecem exatamente onde as digitou** no seu código.
+
+    ```javascript
+    catName("Chloe");
+
+    function catName(name) {
+      console.log("O nome do meu gato é " + name);
+    }
+    ```
+
+    Uma observação importante, **apenas declarações são hoisted**, ou seja, o JavaScript apenas eleva as declarações e não as inicializações. Se uma variável for declarada e inicializada após usá-la, o valor será retornado undefined. Por exemplo:
+
+    ```javascript
+    console.log(num); // Retorna undefined
+    var num;
+    num = 6;
+    ```
