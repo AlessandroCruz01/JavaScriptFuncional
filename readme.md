@@ -371,3 +371,130 @@ _Existem diversos paradigmas de programação, cada um com suas características
 
     console.log(obj.secreto);
     ```
+
+## Paradigms
+
+Como ja indicamos anteriormente, o JavaScript é multi-paradigma. Ou seja, aceita diferentes tipos de paradigmas, nesse contexto vamos focar nas duas principais, POO e Funcional que será o foco deste curso.
+
+- ### JavaScript Orientado a Objetos
+
+  A orientação a objetos ja deve ser um conceito sólido antes de praticar os próximos tópicos. Vamos diretamente aos pilares:
+
+  - **Classe (Class)**
+    Uma **classe** é um molde para criar objetos. Em javaScript, usamos `class` como sintaxe suggar sobre o prototype.
+
+    ```javascript
+    import { LightningElement } from "lwc";
+
+    export default class MeuComponente extends LightningElement {
+      // Propriedades e métodos
+    }
+    ```
+
+  - **Objeto (Object)**
+    Um **objeto** é uma instância de uma classe, ele carrega os dados e comportamentos definidos pela classe.
+
+    ```javascript
+    @track produto = new Produto('Notebook', 4000);
+    ```
+
+  - **Encapsulamento (Encapsulation)**
+    É o **princípio de esconder os detalhes** e expor apenas o que é necessário. Serve para proteger o estado interno do objeto e garantir controle sobre a manipulação. A partir de **ES2022**, usamos o **`#`** para indicar atributos **privados**.
+
+    ```javascript
+    class Conta {
+      #saldo = 0;
+
+      depositar(valor) {
+        if (valor > 0) this.#saldo += valor;
+      }
+
+      get saldo() {
+        return this.#saldo;
+      }
+    }
+    ```
+
+    No LWC não se usa o **`#`** (ainda não é suportado em todos os navegadores), mas sim **modificadores de acesso via convenção (`_`)**:
+
+    ```javascript
+    // arquivo JS
+    let _interno = 'acesso restrito';
+
+    // getter/setter públicos
+    get dadoPublico() { return this._interno; }
+    ```
+
+  - **Abstração (Abstraction)**
+    Uma abstração significa **ocultar a complexidade** e mostrar apenas o necessário para o uso externo. Ajuda a manter o código modular e reutilizável. No **LWC** é usado abstração a todo momento com:
+
+    - **chamadas de método `@AuraEnabled`**
+    - **classes auxiliares JS**
+    - **serviços como `lightning/ui*` adaptam APIs**
+      No caso do JS comum, podemos verificar outro tipo de abstração uma classe de **ApiService** onde passamos apenas um endpoint e dentro da classe ela chama uma `fetch`, no caso, quem usa a classe de API nao precisa saber como funciona o fetch. isso é a abstração.
+
+  - **Herança (Inheritance)**
+    A herança permite que uma **classe filha** receba automaticamente **propriedades** e **métodos** da classe pai. Evita repetição de código e promove estrutura hierárquica.
+
+    ```javascript
+    class Usuario {
+      constructor(nome) {
+        this.nome = nome;
+      }
+
+      saudacao() {
+        return `Olá, ${this.nome}`;
+      }
+    }
+
+    class Admin extends Usuario {
+      deletarUsuario(usuario) {
+        return `${this.nome} removeu ${usuario}`;
+      }
+    }
+    ```
+
+    No LWC todo componente herda de **`LightningElement`**
+
+    ```javascript
+    export default class MeuComp extends LightningElement {
+      // está herdando métodos como this.dispatchEvent()
+    }
+    ```
+
+  - **Polimorfismo (Polymorphism)**
+    O polimorfismo permite que **várias classes implementem métodos com o mesmo nome**, mas com **comportamentos diferentes**. É a chave para adaptar uma lógica específica sem alterar o código base.
+
+    ```javascript
+    class Botao {
+      acao() {
+        return "Botão pressionado";
+      }
+    }
+
+    class BotaoSalvar extends Botao {
+      acao() {
+        return "Salvando dados...";
+      }
+    }
+
+    class BotaoCancelar extends Botao {
+      acao() {
+        return "Cancelando operação...";
+      }
+    }
+
+    const botoes = [new BotaoSalvar(), new BotaoCancelar()];
+    botoes.forEach((btn) => console.log(btn.acao()));
+    ```
+
+  - **Resumo**
+
+    | Pilar          | JS Moderno                    | Em LWC                              |
+    | -------------- | ----------------------------- | ----------------------------------- |
+    | Classe         | `class MinhaClasse`           | `extends LightningElement`          |
+    | Objeto         | `const x = new MinhaClasse()` | `@track produto = new Produto(...)` |
+    | Encapsulamento | `#privado`, `get/set`         | `_interno`, `get nome()`            |
+    | Abstração      | Métodos que escondem a lógica | `handleSubmit()`, chamadas a Apex   |
+    | Herança        | `extends OutraClasse`         | `extends LightningElement`          |
+    | Polimorfismo   | `sobrescrita de método`       | `renderedCallback()` customizado    |
