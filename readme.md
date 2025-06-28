@@ -206,3 +206,54 @@ _Existem diversos paradigmas de programação, cada um com suas características
         const joao = new Pessoa("João");
         joao.apresentar();
         ```
+
+  - **Declarativo x Imperativo:**
+    A diferença entre **declarativo** e **imperativo** é fundamental para quem quer dominar o JavaScript, entender quando e porque usar um ou outro é um dos marcos de quem sai do nível intermediário para o avançado.
+
+    - **Imperativo:**
+      Precisa de **máximo controle** da execução, é a base da programação procedural e orientado a objetos, seria algo como descrever detalhadamente o passo a passo para um funcionário ir pagar uma conta, ou seja, cada passo a passo precisa ser detalhadamente indicado.
+      Por exemplo:
+
+      ```javascript
+      const numeros = [1, 2, 3, 4, 5, 6];
+      let soma = 0;
+
+      for (let i = 0; i < numeros.length; i++) {
+        if (numeros[i] % 2 === 0) {
+          soma += numeros[i] * numeros[i];
+        }
+      }
+
+      console.log(soma); // 56
+      ```
+
+    - **Declarativo:**
+      É um código que requer mais clareza e legibilidade, ou seja, não requer os detalhes de como a tarefa será executada por baixo dos panos, levando em consideração e exemplo anterior, seria algo como pedir para o mesmo funcionário ir pagar a mesma conta, porém, sem precisar indicar os detalhes como no caso anterior.
+      Por Exemplo:
+
+      ```javascript
+      const numeros = [1, 2, 3, 4, 5, 6];
+
+      const soma = numeros
+        .filter((n) => n % 2 === 0)
+        .map((n) => n * n)
+        .reduce((acc, n) => acc + n, 0);
+
+      console.log(soma); // 56
+      ```
+
+    - **Combo: Misturando os dois:**
+      O javaScript permite misturar ambos, O segredo é saber **quando abstrair (declarativo)** ou quando **controlar (imperativo)**
+
+      ```javascript
+      function processarNumeros(numeros) {
+        if (!Array.isArray(numeros)) return 0; // Imperativo
+
+        return numeros // Declarativo
+          .filter((n) => n % 2 === 0)
+          .map((n) => n * n)
+          .reduce((acc, val) => acc + val, 0);
+      }
+      ```
+
+      ![Declarativo X Imperativo](https://media.licdn.com/dms/image/v2/C4E12AQEcG8InMSroFg/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1602860388222?e=1756339200&v=beta&t=xhS0DUUK-tYzr9EKZoqjxu64RcsFHcelzufq5ZTMHvg)
