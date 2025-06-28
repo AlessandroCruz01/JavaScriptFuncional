@@ -315,3 +315,59 @@ _Existem diversos paradigmas de programação, cada um com suas características
     var num;
     num = 6;
     ```
+
+  - **Coerção de Tipos e "truthy / falsy"**
+    Tudo em JavaScript tem um valor de verdade:
+
+    ```javascript
+    console.log(!!0);
+    console.log(!!"");
+    console.log(!![]);
+    console.log(!!null);
+    console.log(!!undefined);
+    console.log(!!{});
+    ```
+
+  - **Currying, Partial Application**
+    É basicamente o processo de transformar uma função com vários argumentos na mesma função com menos argumentos. Ou seja, você pode passar todos os argumentos que uma função está esperando e obter o resultado, ou passar um subconjunto desses argumentos e recuperar uma função que aguarda o resto dos argumentos.
+
+    ```javascript
+    function mathAny(x) {
+      return function sum(y) {
+        return function mul(z) {
+          return function deb(f) {
+            return function pty(r) {
+              let sum = x + y + z + f + r;
+              return `${x} + ${y} + ${z} + ${f} + ${r}: ` + sum;
+            };
+          };
+        };
+      };
+    }
+
+    console.log(mathAny(5)(6)(7)(4)(6));
+    ```
+
+  - **Object Descriptors**
+    O método Object.defineProperty() define uma nova propriedade diretamente em um objeto, ou modifica uma propriedade já existente em um objeto, e retorna o objeto.
+    `Object.defineProperty(obj, prop, descriptor)`
+    Parâmetros:
+
+    - `obj`:
+      O objeto no qual será definida a propriedade.
+    - `prop`:
+      O nome da propriedade que será definida ou modificada.
+    - `descriptor`:
+      O descritor para a propriedade que será definida ou modificada.
+
+    ```javascript
+    const obj = {};
+    Object.defineProperty(obj, "secreto", {
+      value: 42,
+      writable: true,
+      configurable: false,
+      enumerable: false,
+    });
+
+    console.log(obj.secreto);
+    ```
