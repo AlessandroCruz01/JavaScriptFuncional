@@ -257,3 +257,17 @@ _Existem diversos paradigmas de programação, cada um com suas características
       ```
 
       ![Declarativo X Imperativo](https://media.licdn.com/dms/image/v2/C4E12AQEcG8InMSroFg/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1602860388222?e=1756339200&v=beta&t=xhS0DUUK-tYzr9EKZoqjxu64RcsFHcelzufq5ZTMHvg)
+
+  - **Como funciona o JavaScript**
+    O JavaScript funciona em um ambiente **single-threaded**, com uma única **pilha de execução (stack)** onde os comandos são empilhados e executados um por um. Apesar de ser single-thread o javaScript permite a execução de forma assíncrona (como `setTimeOut`, `fetch` ou `event listener`) é chamada, ela é delegada ao navegador (ou ao Node.js) e, ao ser concluída, sua **callback** vai para o **event queue**. O **Event Loop** fica monitorando constantemente se a stack está vazia, quando estiver, ele pega a próxima tarefa do event queue e empilha para execução. Enquanto isso, objetos e dados do programa ficam armazenados na **heap**, uma área de memória dinâmica usada para armazenar valores complexos (como objetos e Arrays). Esse modelo permite que o JS seja não-bloqueante e reativo, mesmo com apenas uma única thread.
+
+    ![process Js](https://miro.medium.com/v2/resize:fit:882/1*cvU93uPLNe69rPHSsu1SIw.png)
+
+    - **Heap**: _Área de memória onde armazena as informações._
+    - **Stack**: _Pilha de execução (Single Thread) - Só pode ter uma única execução ativa._
+    - **Event Queue**: _Fila de eventos (para executar depois) -> Joga para a stack._
+    - **Event Loop**: _Fica monitorando a event queue._
+
+    ![ProcessJs](https://miro.medium.com/v2/1*4lHHyfEhVB0LnQ3HlhSs8g.png)
+
+    - **Para testar o processo de forma visual: [Loupe](https://latentflip.com/loupe)**
