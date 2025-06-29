@@ -500,3 +500,58 @@ Como ja indicamos anteriormente, o JavaScript é multi-paradigma. Ou seja, aceit
     | Polimorfismo   | `sobrescrita de método`       | `renderedCallback()` customizado    |
 
 ## Funções
+
+Neste tópico será abordado tudo sobre funções. Funções são valores e podemos passar funções como parâmetros para outras funções, uma constante que recebe outra função ou até mesmo fazer encadeamento de funções como ja vimos anteriormente.
+Para começar no mundo do **paradigma funcional** temos que conhecer sobre o termo **Imutabilidade** ou seja, a ideia da [imutabilidade](https://rfcosta85.medium.com/descobrindo-javascript-imutabilidade-a8a052be156c) é tornar nossos códigos mais seguros, no sentido de evitar grandes bugs, a imutabilidade junto com as funções puras, também nos permite ter códigos mais fáceis de serem testados e também reutilizados.
+
+- ### Function Declaration vs Function Expression
+
+  Uma **function declaration** é declarada a partir da key word **`function`**:
+
+  ```javascript
+  function bomDia() {
+    console.log("Good Morning");
+  }
+  ```
+
+  Uma **Function Expression** é declarada a partir de uma função anônima e armazenada em uma variável, mais comum em uma **`const`**:
+
+  ```javascript
+  const bomDia = function () {
+    console.log("Good Morning");
+  };
+  ```
+
+- ### Arrow Function
+
+  Uma **arrow Function** é uma nova forma de declarar funções dentro do JavaScript que usa sempre uma **function Expression** para sua declaração. Isso acontece por conta de uma arrow function ser por padrão, sempre uma função sem nome.
+
+  `const bomDia = () => console.log("Good Morning")`
+
+  Perceba acima que o retorno é **implícito** ou seja, não é necessário o uso do `return`, para termos o uso do `return` a função **deve** ter um compo:
+
+  ```javascript
+  const bomDia = (name) => {
+    return `Good Morning ${name}`;
+  };
+  ```
+
+  Uma outra característica das arrows são em como o `this` se comporta dentro das arrows,a principal característica do this dentro de uma arrow function é que ele não tem seu próprio contexto de execução. Em vez disso, ele herda o valor de this do escopo onde a função foi definida (isso se chama lexical scoping).
+
+  ```javascript
+  function NormalFunction() {
+    this.nome = "Alessandro";
+
+    setTimeout(function () {
+      console.log("Normal Function:", this.nome); // ❌ undefined
+    }, 1000);
+  }
+
+  function ArrowFunction() {
+    this.nome = "Alessandro";
+
+    setTimeout(() => {
+      console.log("Arrow Function:", this.nome); // ✅ "Alessandro"
+    }, 1000);
+  }
+  ```
