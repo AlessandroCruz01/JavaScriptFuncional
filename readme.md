@@ -627,3 +627,47 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
   ```
 
   [Filter.js](./Functions/Filter.js)
+
+- ### Reduce
+
+  O método [Array.prototype.reduce() ou apenas reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) executa um método callback **reducer** para cada elemento do array, retornando **um único** valor de retorno.
+
+  ```javascript
+  const array1 = [1, 2, 3, 4];
+
+  // 0 + 1 + 2 + 3 + 4
+  const initialValue = 0;
+  const sumWithInitial = array1.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialValue
+  );
+
+  console.log(sumWithInitial);
+  // Expected output: 10
+  ```
+
+  A função reducer recebe **quatro** parâmetros:
+
+  - Acumulador (acc)
+  - Valor Atual (cur)
+  - Index Atual (idx)
+  - Array original (src)
+
+  O valor de retorno da sua função reducer é atribuída ao acumulador. O acumulador, com seu valor atualizado, é repassado para cada iteração subsequente pelo array, que por fim, se tornará o valor resultante, único, final.
+
+  ```javascript
+  array.reduce(callback( acumulador, valorAtual[, index[, array]] )[, valorInicial])
+  ```
+
+  O método `reduce()` executa a função de callback uma vez para cada elemento presente no array, excluindo furos (valores indefinidos), recebendo quatro argumentos:
+  acumulador
+
+  - valor inicial (ou o valor do callback anterior),
+    valorAtual
+  - o valor do elemento atual
+    index
+  - o índice atual e
+    array
+  - o array onde a iteração está ocorrendo.
+
+  A primeira vez que o callback é chamado, o **acumulador** e o **valorAtual** podem ter um de dois valores possíveis. Se o **valorInicial** tiver sido fornecido na chamada à função `reduce()`, então o **acumulador** será igual ao **valorInicial** e o **valorAtual** será igual ao primeiro valor no array. Caso nenhum **valorInicial** seja fornecido, acumulador será igual ao primeiro valor no array, e **valorAtual** será igual ao segundo.
