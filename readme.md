@@ -588,7 +588,17 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
 
 - ### Map
 
-  O método **[map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`
+  O método **[map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`. O Map sempre retorna uma lista de mesmo tamanho da lista de origem.
+  Pontos importantes:
+
+  - **Map não modifica o array original:**
+    O map() não altera o array original – ele retorna um novo array com base na transformação.
+  - **Sobre a função callback:**
+    A função callback pode receber até 3 argumentos:
+    `function callback(currentValue, index, array)`
+
+  O método map() cria um novo array com os resultados da função callback aplicada a cada elemento do array original.
+  Ele não modifica o array original e sempre retorna um novo array com o mesmo número de elementos.
 
   ```javascript
   const array1 = [1, 4, 9, 16];
@@ -599,3 +609,5 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
   console.log(map1);
   // Expected output: Array [2, 8, 18, 32]
   ```
+
+  [Map.js](./Functions/Map.js)
