@@ -10,7 +10,7 @@ const products = [
   },
   {
     name: "Notebook Dell Inspiron",
-    desc: 'Intel i5, 8GB RAM, SSD 256GB, Tela 15.6"',
+    desc: "Intel i5, 8GB RAM, SSD 256GB, Tela 15.6",
     price: 4199.0,
   },
   {
@@ -56,3 +56,14 @@ console.log(lowValues);
 
 const descriptions = products.map((product) => product.desc);
 console.log(descriptions);
+
+const namesProducts = products.map((product) => product.name);
+console.log(namesProducts);
+
+const firstLetter = products.map((product) => product.name[0]);
+console.log(firstLetter);
+
+const lastLatter = products.map(
+  (product) => product.name[product.name.length - 1]
+);
+console.log(lastLatter);

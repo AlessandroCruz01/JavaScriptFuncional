@@ -588,7 +588,7 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
 
 - ### Map
 
-  O método **[map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`. O Map sempre retorna uma lista de mesmo tamanho da lista de origem.
+  O método **[Array.prototype.map() ou apenas map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`. O Map sempre retorna uma lista de mesmo tamanho da lista de origem.
   Pontos importantes:
 
   - **Map não modifica o array original:**
@@ -611,3 +611,19 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
   ```
 
   [Map.js](./Functions/Map.js)
+
+- ### Filter
+
+  O método [Array.prototype.filter() ou apenas filter()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) cria um novo array com todos os elementos que passaram no teste implementado pela função fornecida.
+  Diferente do método map o método **filter** retorna **um novo array** apenas como os elementos **que passaram no teste** do método callback, já o método callback deve obrigatoriamente retornar um boolean.
+  O método **não altera** o array original, e o array resultante pode ter tamanho menor, ou até ser vazio.
+  A função callback pode receber até 3 argumentos:
+  `function callback(currentValue, index, array)`
+
+  ```javascript
+  const words = ["spray", "elite", "exuberant", "destruction", "present"];
+  const result = words.filter((word) => word.length > 6);
+  console.log(result); // Expected output: Array ["exuberant", "destruction", "present"]
+  ```
+
+  [Filter.js](./Functions/Filter.js)
