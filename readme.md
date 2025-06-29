@@ -555,3 +555,47 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
     }, 1000);
   }
   ```
+
+- ### Função Callback
+
+  Uma função callback é uma função passada a outra função como argumento, que é então invocado dentro da função externa para completar algum tipo de rotina ou ação.
+
+  ```javascript
+  function funcaoDeOrdemMaior(cb) {
+    cb();
+    console.log("Função de ordem maior invocada");
+  }
+
+  function meuCallback() {
+    console.log("Callback invocado");
+  }
+
+  funcaoDeOrdemMaior(meuCallback);
+  ```
+
+  Um dos usos mais comuns das funções callbacks são nas requests para servidores, no caso existe a chamada de API e a função espera o evento de retorno para aí sim fazer algo.
+  Outro exemplo de callback que deixa bem claro a tratativa de chamar uma outra função depois de um tempo, seria o setInterval, onde será passado por parâmetro uma função e um intervalo de tempo em milissegundos. Depois que esse tempo passar a função que foi passada por parâmetro será chamada.
+
+  ```javascript
+  setInterval(function () {
+    console.log("Exec");
+  }, 5000);
+  ```
+
+- ### Map - Reduce - Filter
+
+  ![MapReduceFilter](https://www.lambda3.com.br/wp-content/uploads//2017/01/map-filter-reduce-in-emoji-1.png)
+
+- ### Map
+
+  O método **[map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`
+
+  ```javascript
+  const array1 = [1, 4, 9, 16];
+
+  // Pass a function to map
+  const map1 = array1.map((x) => x * 2);
+
+  console.log(map1);
+  // Expected output: Array [2, 8, 18, 32]
+  ```
