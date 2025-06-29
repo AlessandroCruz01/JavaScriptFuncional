@@ -498,3 +498,5 @@ Como ja indicamos anteriormente, o JavaScript é multi-paradigma. Ou seja, aceit
     | Abstração      | Métodos que escondem a lógica | `handleSubmit()`, chamadas a Apex   |
     | Herança        | `extends OutraClasse`         | `extends LightningElement`          |
     | Polimorfismo   | `sobrescrita de método`       | `renderedCallback()` customizado    |
+
+## Funções
