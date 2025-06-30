@@ -671,3 +671,58 @@ Para começar no mundo do **paradigma funcional** temos que conhecer sobre o ter
   - o array onde a iteração está ocorrendo.
 
   A primeira vez que o callback é chamado, o **acumulador** e o **valorAtual** podem ter um de dois valores possíveis. Se o **valorInicial** tiver sido fornecido na chamada à função `reduce()`, então o **acumulador** será igual ao **valorInicial** e o **valorAtual** será igual ao primeiro valor no array. Caso nenhum **valorInicial** seja fornecido, acumulador será igual ao primeiro valor no array, e **valorAtual** será igual ao segundo.
+
+## Funções Assíncronas
+
+Em JavaScript, funções assíncronas (ou async functions) são uma forma moderna e mais legível de lidar com operações que levam tempo para serem concluídas, como requisições a servidores, leitura de arquivos ou timers. Essas funções ajudam a evitar o chamado "**callback hell**" e tornam o código assíncrono mais fácil de entender e manter.
+A programação assíncrona é essencial porque o JavaScript é uma linguagem de execução single-threaded, ou seja, só consegue executar uma tarefa por vez. Com funções assíncronas, é possível iniciar uma tarefa demorada e continuar executando outras operações enquanto essa tarefa é concluída em segundo plano.
+
+**O que é "callback hell"?**
+Callback Hell (ou “inferno dos callbacks”) é um problema comum em JavaScript quando você tem muitos callbacks aninhados uns dentro dos outros, criando um código difícil de ler, manter e debugar.
+Isso acontece porque JavaScript usa muito callbacks para lidar com operações assíncronas (como ler arquivos, fazer requisições ou usar setTimeout). Quando uma função depende do resultado da outra, você acaba encadeando várias funções de forma aninhada.
+
+```javascript
+pegarUsuario(1, function (usuario) {
+  pegarPosts(usuario.id, function (posts) {
+    pegarComentarios(posts[0].id, function (comentarios) {
+      console.log(comentarios);
+    });
+  });
+});
+```
+
+- ### Promise
+
+  O [promise](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise) é uma resumidamente uma promessa, ou seja, algo que será resolvido no futuro. Em termos técnicos, uma **Promise** é um proxy para um valor não necessariamente conhecido quando a promise é criada. Ele permite que você associe manipuladores ao valor de sucesso ou motivo de falha de uma ação assíncrona. Isso permite que métodos assíncronos retornem valores como métodos síncronos: em vez de retornar imediatamente o valor final, o método assíncrono retorna uma promise para fornecer o valor em algum momento no futuro.
+  ![promise](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/promises.png)
+
+  ```javascript
+  const minhaPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("foo");
+    }, 300);
+  });
+
+  minhaPromise
+    .then(handleFulfilledA, handleRejectedA)
+    .then(handleFulfilledB, handleRejectedB)
+    .then(handleFulfilledC, handleRejectedC);
+  ```
+
+  Por padrão uma promise recebe uma função callback que tem por parâmetro dois valores o **resolve** e o **reject**:
+
+  - resolve(valor): indica que a operação foi bem-sucedida e retorna o valor desejado.
+  - reject(erro): indica que a operação falhou e retorna o erro.
+
+  Pense em uma promise como um pedido de pizza:
+
+  1. Voce faz o pedido (Inicia a promise)
+  2. A pizzaria pode:
+
+     - Entregar a pizza (`resolve(pizza)`)
+     - Dizer que algo deu errado e a pizza não poderá ser entregue (`reject('Acabou o queijo')`)
+
+  3. Voce reage com:
+
+  - `.then(pizza => comer(pizza))`
+  - `.catch(erro => chorar(erro))`
