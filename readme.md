@@ -499,6 +499,40 @@ Como ja indicamos anteriormente, o JavaScript é multi-paradigma. Ou seja, aceit
     | Herança        | `extends OutraClasse`         | `extends LightningElement`          |
     | Polimorfismo   | `sobrescrita de método`       | `renderedCallback()` customizado    |
 
+  - **Getters And Setters**
+    As classes JavaScript contam com dois métodos especiais: um com o prefixo [**get**](https://www.devmedia.com.br/javascript-getters-e-setters/41198) que tem a função de retornar um valor, e outro precedido pela palavra **set** que serve para atribuir um valor. Ambos funcionam como se fossem uma propriedade da classe. Podemos ver melhor no exemplo abaixo:
+
+    ```javascript
+    class Pessoa {
+      constructor() {
+        this.data = {};
+      }
+
+      cpfIsValid(value) {
+        return /^\d\.\d\.\d\-\d$/.test(value);
+      }
+
+      get cpf() {
+        // verifica se a propriedade não existe no atributo this.data da classe
+        if (!this.data.hasOwnProperty("cpf")) {
+          return undefined;
+        }
+        // retorna o valor da cpf
+        return this.data.cpf;
+      }
+
+      set cpf(value) {
+        if (!this.cpfIsValid(value)) {
+          throw new Error("numero de cpf invalido");
+        }
+
+        this.data["cpf"] = value;
+      }
+    }
+    ```
+
+    Neste exemplo reescrevemos a classe criando um único atributo na classe chamado data na linha 3 onde definimos seu valor inicial como um objeto vazio. Este atributo tem como função armazenar propriedades que serão utilizadas na classe.
+
 ## Funções
 
 Neste tópico será abordado tudo sobre funções. Funções são valores e podemos passar funções como parâmetros para outras funções, uma constante que recebe outra função ou até mesmo fazer encadeamento de funções como ja vimos anteriormente.
@@ -726,3 +760,19 @@ pegarUsuario(1, function (usuario) {
 
   - `.then(pizza => comer(pizza))`
   - `.catch(erro => chorar(erro))`
+
+- ### Async/Await
+
+  Quando uma função assíncrona é chamada, ela retorna uma `Promise`. Quando a função assíncrona retorna um **valor**, a `Promise` será resolvida com o valor retornado. Quando a função assíncrona lança uma exceção ou algum valor, a Promise será rejeitada com o valor lançado.
+  Uma função assíncrona pode conter uma expressão `await`, que **pausa a execução da função assíncrona e espera pela resolução da Promise passada**, e depois retoma a execução da função assíncrona e retorna o valor resolvido.
+  A proposta das funções async/await é de simplificar o uso de forma síncrona das Promises e executar alguns procedimentos em um grupo de Promises. Assim como Promises são similares a callbacks estruturados, funções async/await são similares à junção de generators com Promises.
+
+  ```javascript
+  async function HelloAfterThreeSeconds() {
+    console.log("After");
+    await setTimeout(() => console.log("HelloWord"), 3000);
+    console.log("Before");
+  }
+
+  HelloAfterThreeSeconds();
+  ```

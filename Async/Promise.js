@@ -26,11 +26,18 @@ const getCep = new Promise((resolve, reject) => {
 function readFileAndWrite(pathFile) {
   return new Promise((resolve, reject) => {
     fs.readFile(pathRote, {}, (err, data) => {
-      resolve(data);
+      if (data) {
+        resolve(data);
+      } else {
+        reject(err);
+      }
     });
   });
 }
 
-readFileAndWrite(pathRote).then((data) => {
-  fs.writeFileSync(pathRotePromise, data, {});
-});
+readFileAndWrite(pathRote)
+  .then((data) => {
+    fs.writeFileSync(pathRotePromise, data, {});
+    return data.toString();
+  })
+  .then((data) => console.log(data));
