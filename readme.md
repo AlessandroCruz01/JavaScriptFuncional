@@ -499,4 +499,280 @@ Como ja indicamos anteriormente, o JavaScript é multi-paradigma. Ou seja, aceit
     | Herança        | `extends OutraClasse`         | `extends LightningElement`          |
     | Polimorfismo   | `sobrescrita de método`       | `renderedCallback()` customizado    |
 
+  - **Getters And Setters**
+    As classes JavaScript contam com dois métodos especiais: um com o prefixo [**get**](https://www.devmedia.com.br/javascript-getters-e-setters/41198) que tem a função de retornar um valor, e outro precedido pela palavra **set** que serve para atribuir um valor. Ambos funcionam como se fossem uma propriedade da classe. Podemos ver melhor no exemplo abaixo:
+
+    ```javascript
+    class Pessoa {
+      constructor() {
+        this.data = {};
+      }
+
+      cpfIsValid(value) {
+        return /^\d\.\d\.\d\-\d$/.test(value);
+      }
+
+      get cpf() {
+        // verifica se a propriedade não existe no atributo this.data da classe
+        if (!this.data.hasOwnProperty("cpf")) {
+          return undefined;
+        }
+        // retorna o valor da cpf
+        return this.data.cpf;
+      }
+
+      set cpf(value) {
+        if (!this.cpfIsValid(value)) {
+          throw new Error("numero de cpf invalido");
+        }
+
+        this.data["cpf"] = value;
+      }
+    }
+    ```
+
+    Neste exemplo reescrevemos a classe criando um único atributo na classe chamado data na linha 3 onde definimos seu valor inicial como um objeto vazio. Este atributo tem como função armazenar propriedades que serão utilizadas na classe.
+
 ## Funções
+
+Neste tópico será abordado tudo sobre funções. Funções são valores e podemos passar funções como parâmetros para outras funções, uma constante que recebe outra função ou até mesmo fazer encadeamento de funções como ja vimos anteriormente.
+Para começar no mundo do **paradigma funcional** temos que conhecer sobre o termo **Imutabilidade** ou seja, a ideia da [imutabilidade](https://rfcosta85.medium.com/descobrindo-javascript-imutabilidade-a8a052be156c) é tornar nossos códigos mais seguros, no sentido de evitar grandes bugs, a imutabilidade junto com as funções puras, também nos permite ter códigos mais fáceis de serem testados e também reutilizados.
+
+- ### Function Declaration vs Function Expression
+
+  Uma **function declaration** é declarada a partir da key word **`function`**:
+
+  ```javascript
+  function bomDia() {
+    console.log("Good Morning");
+  }
+  ```
+
+  Uma **Function Expression** é declarada a partir de uma função anônima e armazenada em uma variável, mais comum em uma **`const`**:
+
+  ```javascript
+  const bomDia = function () {
+    console.log("Good Morning");
+  };
+  ```
+
+- ### Arrow Function
+
+  Uma **arrow Function** é uma nova forma de declarar funções dentro do JavaScript que usa sempre uma **function Expression** para sua declaração. Isso acontece por conta de uma arrow function ser por padrão, sempre uma função sem nome.
+
+  `const bomDia = () => console.log("Good Morning")`
+
+  Perceba acima que o retorno é **implícito** ou seja, não é necessário o uso do `return`, para termos o uso do `return` a função **deve** ter um compo:
+
+  ```javascript
+  const bomDia = (name) => {
+    return `Good Morning ${name}`;
+  };
+  ```
+
+  Uma outra característica das arrows são em como o `this` se comporta dentro das arrows,a principal característica do this dentro de uma arrow function é que ele não tem seu próprio contexto de execução. Em vez disso, ele herda o valor de this do escopo onde a função foi definida (isso se chama lexical scoping).
+
+  ```javascript
+  function NormalFunction() {
+    this.nome = "Alessandro";
+
+    setTimeout(function () {
+      console.log("Normal Function:", this.nome); // ❌ undefined
+    }, 1000);
+  }
+
+  function ArrowFunction() {
+    this.nome = "Alessandro";
+
+    setTimeout(() => {
+      console.log("Arrow Function:", this.nome); // ✅ "Alessandro"
+    }, 1000);
+  }
+  ```
+
+- ### Função Callback
+
+  Uma função callback é uma função passada a outra função como argumento, que é então invocado dentro da função externa para completar algum tipo de rotina ou ação.
+
+  ```javascript
+  function funcaoDeOrdemMaior(cb) {
+    cb();
+    console.log("Função de ordem maior invocada");
+  }
+
+  function meuCallback() {
+    console.log("Callback invocado");
+  }
+
+  funcaoDeOrdemMaior(meuCallback);
+  ```
+
+  Um dos usos mais comuns das funções callbacks são nas requests para servidores, no caso existe a chamada de API e a função espera o evento de retorno para aí sim fazer algo.
+  Outro exemplo de callback que deixa bem claro a tratativa de chamar uma outra função depois de um tempo, seria o setInterval, onde será passado por parâmetro uma função e um intervalo de tempo em milissegundos. Depois que esse tempo passar a função que foi passada por parâmetro será chamada.
+
+  ```javascript
+  setInterval(function () {
+    console.log("Exec");
+  }, 5000);
+  ```
+
+- ### Map - Reduce - Filter
+
+  ![MapReduceFilter](https://www.lambda3.com.br/wp-content/uploads//2017/01/map-filter-reduce-in-emoji-1.png)
+
+- ### Map
+
+  O método **[Array.prototype.map() ou apenas map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado. Sintaxe: `arr.map(callback[, thisArg])`. O Map sempre retorna uma lista de mesmo tamanho da lista de origem.
+  Pontos importantes:
+
+  - **Map não modifica o array original:**
+    O map() não altera o array original – ele retorna um novo array com base na transformação.
+  - **Sobre a função callback:**
+    A função callback pode receber até 3 argumentos:
+    `function callback(currentValue, index, array)`
+
+  O método map() cria um novo array com os resultados da função callback aplicada a cada elemento do array original.
+  Ele não modifica o array original e sempre retorna um novo array com o mesmo número de elementos.
+
+  ```javascript
+  const array1 = [1, 4, 9, 16];
+
+  // Pass a function to map
+  const map1 = array1.map((x) => x * 2);
+
+  console.log(map1);
+  // Expected output: Array [2, 8, 18, 32]
+  ```
+
+  [Map.js](./Functions/Map.js)
+
+- ### Filter
+
+  O método [Array.prototype.filter() ou apenas filter()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) cria um novo array com todos os elementos que passaram no teste implementado pela função fornecida.
+  Diferente do método map o método **filter** retorna **um novo array** apenas como os elementos **que passaram no teste** do método callback, já o método callback deve obrigatoriamente retornar um boolean.
+  O método **não altera** o array original, e o array resultante pode ter tamanho menor, ou até ser vazio.
+  A função callback pode receber até 3 argumentos:
+  `function callback(currentValue, index, array)`
+
+  ```javascript
+  const words = ["spray", "elite", "exuberant", "destruction", "present"];
+  const result = words.filter((word) => word.length > 6);
+  console.log(result); // Expected output: Array ["exuberant", "destruction", "present"]
+  ```
+
+  [Filter.js](./Functions/Filter.js)
+
+- ### Reduce
+
+  O método [Array.prototype.reduce() ou apenas reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) executa um método callback **reducer** para cada elemento do array, retornando **um único** valor de retorno.
+
+  ```javascript
+  const array1 = [1, 2, 3, 4];
+
+  // 0 + 1 + 2 + 3 + 4
+  const initialValue = 0;
+  const sumWithInitial = array1.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialValue
+  );
+
+  console.log(sumWithInitial);
+  // Expected output: 10
+  ```
+
+  A função reducer recebe **quatro** parâmetros:
+
+  - Acumulador (acc)
+  - Valor Atual (cur)
+  - Index Atual (idx)
+  - Array original (src)
+
+  O valor de retorno da sua função reducer é atribuída ao acumulador. O acumulador, com seu valor atualizado, é repassado para cada iteração subsequente pelo array, que por fim, se tornará o valor resultante, único, final.
+
+  ```javascript
+  array.reduce(callback( acumulador, valorAtual[, index[, array]] )[, valorInicial])
+  ```
+
+  O método `reduce()` executa a função de callback uma vez para cada elemento presente no array, excluindo furos (valores indefinidos), recebendo quatro argumentos:
+  acumulador
+
+  - valor inicial (ou o valor do callback anterior),
+    valorAtual
+  - o valor do elemento atual
+    index
+  - o índice atual e
+    array
+  - o array onde a iteração está ocorrendo.
+
+  A primeira vez que o callback é chamado, o **acumulador** e o **valorAtual** podem ter um de dois valores possíveis. Se o **valorInicial** tiver sido fornecido na chamada à função `reduce()`, então o **acumulador** será igual ao **valorInicial** e o **valorAtual** será igual ao primeiro valor no array. Caso nenhum **valorInicial** seja fornecido, acumulador será igual ao primeiro valor no array, e **valorAtual** será igual ao segundo.
+
+## Funções Assíncronas
+
+Em JavaScript, funções assíncronas (ou async functions) são uma forma moderna e mais legível de lidar com operações que levam tempo para serem concluídas, como requisições a servidores, leitura de arquivos ou timers. Essas funções ajudam a evitar o chamado "**callback hell**" e tornam o código assíncrono mais fácil de entender e manter.
+A programação assíncrona é essencial porque o JavaScript é uma linguagem de execução single-threaded, ou seja, só consegue executar uma tarefa por vez. Com funções assíncronas, é possível iniciar uma tarefa demorada e continuar executando outras operações enquanto essa tarefa é concluída em segundo plano.
+
+**O que é "callback hell"?**
+Callback Hell (ou “inferno dos callbacks”) é um problema comum em JavaScript quando você tem muitos callbacks aninhados uns dentro dos outros, criando um código difícil de ler, manter e debugar.
+Isso acontece porque JavaScript usa muito callbacks para lidar com operações assíncronas (como ler arquivos, fazer requisições ou usar setTimeout). Quando uma função depende do resultado da outra, você acaba encadeando várias funções de forma aninhada.
+
+```javascript
+pegarUsuario(1, function (usuario) {
+  pegarPosts(usuario.id, function (posts) {
+    pegarComentarios(posts[0].id, function (comentarios) {
+      console.log(comentarios);
+    });
+  });
+});
+```
+
+- ### Promise
+
+  O [promise](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise) é uma resumidamente uma promessa, ou seja, algo que será resolvido no futuro. Em termos técnicos, uma **Promise** é um proxy para um valor não necessariamente conhecido quando a promise é criada. Ele permite que você associe manipuladores ao valor de sucesso ou motivo de falha de uma ação assíncrona. Isso permite que métodos assíncronos retornem valores como métodos síncronos: em vez de retornar imediatamente o valor final, o método assíncrono retorna uma promise para fornecer o valor em algum momento no futuro.
+  ![promise](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Promise/promises.png)
+
+  ```javascript
+  const minhaPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("foo");
+    }, 300);
+  });
+
+  minhaPromise
+    .then(handleFulfilledA, handleRejectedA)
+    .then(handleFulfilledB, handleRejectedB)
+    .then(handleFulfilledC, handleRejectedC);
+  ```
+
+  Por padrão uma promise recebe uma função callback que tem por parâmetro dois valores o **resolve** e o **reject**:
+
+  - resolve(valor): indica que a operação foi bem-sucedida e retorna o valor desejado.
+  - reject(erro): indica que a operação falhou e retorna o erro.
+
+  Pense em uma promise como um pedido de pizza:
+
+  1. Voce faz o pedido (Inicia a promise)
+  2. A pizzaria pode:
+
+     - Entregar a pizza (`resolve(pizza)`)
+     - Dizer que algo deu errado e a pizza não poderá ser entregue (`reject('Acabou o queijo')`)
+
+  3. Voce reage com:
+
+  - `.then(pizza => comer(pizza))`
+  - `.catch(erro => chorar(erro))`
+
+- ### Async/Await
+
+  Quando uma função assíncrona é chamada, ela retorna uma `Promise`. Quando a função assíncrona retorna um **valor**, a `Promise` será resolvida com o valor retornado. Quando a função assíncrona lança uma exceção ou algum valor, a Promise será rejeitada com o valor lançado.
+  Uma função assíncrona pode conter uma expressão `await`, que **pausa a execução da função assíncrona e espera pela resolução da Promise passada**, e depois retoma a execução da função assíncrona e retorna o valor resolvido.
+  A proposta das funções async/await é de simplificar o uso de forma síncrona das Promises e executar alguns procedimentos em um grupo de Promises. Assim como Promises são similares a callbacks estruturados, funções async/await são similares à junção de generators com Promises.
+
+  ```javascript
+  async function HelloAfterThreeSeconds() {
+    console.log("After");
+    await setTimeout(() => console.log("HelloWord"), 3000);
+    console.log("Before");
+  }
+
+  HelloAfterThreeSeconds();
+  ```
