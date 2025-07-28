@@ -776,3 +776,26 @@ pegarUsuario(1, function (usuario) {
 
   HelloAfterThreeSeconds();
   ```
+
+## Princípios da Programação Funcional
+
+Neste capítulo vamos olhar a fundo os principais conceitos da programação funcional, levando em consideração que estes princípios são levados para a toda a carreira como programador em sí, ou seja, quando formos ler um livro de algoritmos ou quando for necessário usar a programação funcional dentro da POO por exemplo.
+
+### Função pura
+
+Antes de descrever o que é uma função pura, temos que deixar claro que: **é impossível a criação de um app utilizando somente funções puras.** Ou seja, sempre teremos que utilizar funções impuras em qualquer programa que vamos criar, porém, é recomendado sempre que possível que optemos pela utilização das funções puras.
+
+**Função Pura (Pure function)**:
+
+Uma [Função Pura](https://medium.com/@allangrds/o-que-%C3%A9-uma-fun%C3%A7%C3%A3o-pura-em-javascript-2b34edcad8e2) é uma função onde o valor de retorno é determinado apenas por seus valores de entrada, sem efeitos colaterais observáveis.
+
+![pureFunction](https://miro.medium.com/v2/resize:fit:720/format:webp/1*CESrhfRlu7E1aYljbEvdbw.png)
+
+Ou seja, dado o seguinte código:
+
+```javascript
+const add = (x, y) => x + y;
+add(2, 4); // 6
+```
+
+O valor de retorno será sempre baseado nos parâmetros enviados, independentemente de onde/quando for chamado. Se você passar 2 e 4, sempre receberá 6.Nada afeta o resultado.
