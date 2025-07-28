@@ -798,4 +798,4 @@ const add = (x, y) => x + y;
 add(2, 4); // 6
 ```
 
-O valor de retorno será sempre baseado nos parâmetros enviados, independentemente de onde/quando for chamado. Se você passar 2 e 4, sempre receberá 6.Nada afeta o resultado.
+O valor de retorno será sempre baseado nos parâmetros enviados, independentemente de onde/quando for chamado. Se você passar 2 e 4, sempre receberá 6.Nada afeta o resultado. Vamos para o exemplo prático em: [PureFunction.js](./Functional/PureFunctions.js)
